@@ -1,5 +1,5 @@
 #if HAVE_CONFIG_H
-#  include <config.h>
+#  include "config.h"
 #endif
 #include <stdio.h>
 #include <stdlib.h>
@@ -149,9 +149,7 @@ release_state(struct cli_state *state)
 static void
 addresses(FILE *out)
 {
-    fprintf(out,
-            "\n" REPORTBUG "\n"
-            "Home page: " HOMEPAGE "\n");
+    fprintf(out,"\n" REPORTBUG "\n"  "Home page: " HOMEPAGE "\n");
 }
 
 static void
