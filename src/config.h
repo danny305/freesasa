@@ -156,7 +156,7 @@
 #define USE_CHECK 0
 
 /* Define if JSON should be included */
-#define USE_JSON 0
+#define USE_JSON 1
 
 /* Define if threads should be used. */
 #define USE_THREADS 1

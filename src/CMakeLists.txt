@@ -6,16 +6,20 @@ find_package(Threads REQUIRED)
 find_package(LibXml2 REQUIRED)
 message(STATUS "Found libXml2: ${LibXml2_FOUND}")
 
+find_package(PkgConfig)
+pkg_check_modules(JSONC REQUIRED json-c)
+
 
 file(GLOB LIB_HEADERS *.h)
 file(GLOB LIB_SRC *.c)
 
 # TODO when I add json-c functionality include json.c
-list(FILTER LIB_SRC EXCLUDE REGEX ".*(example|json)\.c$")
-
-#TODO Add json-c functionality
-# find_package(jsonc REQUIRED)
-# message(STATUS "Found JSON-C: ${JSONC_FOUND}")
+if (${JSONC_FOUND})
+    message(STATUS "Found JSON-C: ${JSONC_FOUND}")
+    list(FILTER LIB_SRC EXCLUDE REGEX ".*example\.c$")
+else()
+    list(FILTER LIB_SRC EXCLUDE REGEX ".*(example|json)\.c$")
+endif()
 
 
 
@@ -24,6 +28,12 @@ add_library(
     STATIC
     ${LIB_HEADERS}
     ${LIB_SRC}
+)
+
+target_include_directories(
+    freesasa
+    PRIVATE
+        ${JSONC_INCLUDE_DIRS}
 )
 
 set_target_properties(
@@ -38,22 +48,20 @@ target_link_libraries(
     freesasa
     PRIVATE
         ${LIBXML2_LIBRARIES}
+        ${JSONC_LDFLAGS}        
         Threads::Threads
 )
 
 target_compile_definitions(
     freesasa 
     PUBLIC 
-    "HAVE_CONFIG_H"
-    "HAVE_STRING"
+        "HAVE_CONFIG_H"
+        "HAVE_STRING"
 )
 
 
 
 add_executable(main config.h freesasa.h cif.hh  cif.cc main.cc)
-
-# Not Sure if I need this since its PUBLIC on the static lib ^^
-target_compile_definitions(main PUBLIC "HAVE_CONFIG_H")
 
 set_target_properties(main
     PROPERTIES
@@ -64,7 +72,9 @@ set_target_properties(main
 
 target_include_directories(main 
     PRIVATE 
-    ${PROJECT_SOURCE_DIR}/third-party/gemmi/include)
+    ${PROJECT_SOURCE_DIR}/third-party/gemmi/include
+
+)
 
 target_link_libraries(main freesasa)
 
