@@ -63,14 +63,16 @@ target_compile_definitions(
 
 add_executable(main config.h freesasa.h cif.hh  cif.cc main.cc)
 
-set_target_properties(main
+set_target_properties(
+    main
     PROPERTIES
         CXX_STANDARD 14
         RUNTIME_OUTPUT_DIRECTORY ${BIN_DIR}
         OUTPUT_NAME freesasa
 )
 
-target_include_directories(main 
+target_include_directories(
+    main 
     PRIVATE 
     ${PROJECT_SOURCE_DIR}/third-party/gemmi/include
 
@@ -82,7 +84,8 @@ target_link_libraries(main freesasa)
 
 add_executable(example freesasa.h example.c)
 
-set_target_properties(example
+set_target_properties(
+    example
     PROPERTIES
         C_STANDARD 99
         RUNTIME_OUTPUT_DIRECTORY ${BIN_DIR} 
