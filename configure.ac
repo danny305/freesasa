@@ -47,8 +47,8 @@ AC_FUNC_MALLOC
 AC_FUNC_REALLOC
 AC_CHECK_FUNCS([memset mkdir sqrt strchr strdup strerror strncasecmp getopt_long getline])
 
-# C++ 11
-AX_CXX_COMPILE_STDCXX([11])
+# C++ 14
+AX_CXX_COMPILE_STDCXX([14])
 
 AC_CONFIG_FILES([Makefile src/Makefile doc/Makefile doc/Doxyfile doc/man/freesasa.1 tests/Makefile share/Makefile])
 AC_CONFIG_FILES([tests/test-cli], [chmod +x tests/test-cli])
@@ -157,9 +157,11 @@ AC_ARG_ENABLE([check],
 
 AM_CONDITIONAL([USE_CHECK],false)
 AC_DEFINE([USE_CHECK],[0],[Build with Check unit testing framework])
+AM_CONDITIONAL([USE_SUBUNIT], false)
 
 if test "x$enable_check" = "xyes" ; then
   AC_CHECK_LIB(rt, setitimer) # necessary on some platforms
+  AC_CHECK_LIB([subunit], [subunit_test_start]) # necessary on some platforms
   AC_CHECK_LIB([check],[suite_create],
     [],
     [AC_MSG_ERROR[Library Check not available, install libary or configure without flag --enable-check]])
