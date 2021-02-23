@@ -1,7 +1,7 @@
 #ifndef CIF_HH
 #define CIF_HH
 #if HAVE_CONFIG_H
-#  include <config.h>
+#  include "config.h"
 #endif
 #include <cstdio>
 #include <vector>
