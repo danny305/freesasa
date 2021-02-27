@@ -157,8 +157,7 @@ release_state(struct cli_state *state)
 static void
 addresses(FILE *out)
 {
-    fprintf(out, "\n" REPORTBUG "\n"
-                 "Home page: " HOMEPAGE "\n");
+    fprintf(out, "\n" REPORTBUG "\nHome page: " HOMEPAGE "\n");
 }
 
 static void
