@@ -609,7 +609,7 @@ populate_freesasa_result_vectors(gemmi::cif::Block &block, freesasa_node *result
                 auto table = block.find("_atom_site.", atom_site_columns);
                 assert(table.ok());
                 while (atom) {
-                    auto cName = std::string(1, freesasa_node_atom_chain(atom));
+                    auto cName = std::string(freesasa_node_atom_chain(atom));
                     // TODO figure out why this returns decimal string sometimes
                     auto rNum = std::to_string(std::atoi(freesasa_node_atom_residue_number(atom)));
                     auto rName = freesasa_node_atom_residue_name(atom);
